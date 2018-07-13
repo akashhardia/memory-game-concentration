@@ -2,27 +2,34 @@
  * Create a list that holds all of your cards
  */
 let moves           = 0,
+    stars           = 3,
     deck            = document.querySelector('.deck'),
-    dialog          = document.getElementById("myDialog");
+    dialog          = document.getElementById("myDialog"),
+    matchedList     = [];
         
 const cardList      = ['fa fa-diamond','fa fa-paper-plane-o','fa fa-anchor','fa fa-bolt','fa fa-cube','fa fa-leaf','fa fa-bicycle','fa fa-bomb',
                        'fa fa-diamond','fa fa-paper-plane-o','fa fa-anchor','fa fa-bolt','fa fa-cube','fa fa-leaf','fa fa-bicycle','fa fa-bomb'],
-      openList      = [],
-      matchedList   = [];
+      openList      = [];
+
 
 document.querySelector('.restart').addEventListener('click',restart);
 
 function restart(){
     // window.location.reload();
     deck.innerHTML = '';
+    matchedList    = [''];
     display();
     moves = 0;
+    stars = 3;
+    document.querySelector('.stars').innerHTML =  `<li><i class="fa fa-star"></i></li>
+            		                                <li><i class="fa fa-star"></i></li>
+            	                                	<li><i class="fa fa-star"></i></li>`;
     setScore();
 }
  
 function showDialog(){
     const str           = `<h1>Congratulations! You Won</h1>
-                            with   ${moves} moves <br>
+                            with   ${moves} moves and ${stars} stars <br>
                             <button  class='play-again' onclick=closeDialog()>Play Again</button>`
     dialog.innerHTML = str;
     dialog.show();
@@ -43,7 +50,8 @@ let display = function(){
         newElement.classList.add('card');
         deck.appendChild(newElement);
     });
-}
+};
+
 
 document.addEventListener('DOMContentLoaded',display);
 /*
@@ -81,36 +89,51 @@ function shuffle(array) {
  */
 let setScore = function(){
     document.querySelector('.moves').textContent = moves;
-} 
+    if(moves === 21){
+        setStars();
+        --stars;
+    }else if(moves === 35){
+        setStars();
+        --stars;
+    }
+};
+function setStars(){
+        document.querySelector('.stars').firstElementChild.remove();
+}
+
 
 let openCard = function(event){
     const target = event.target;
-    if(target.nodeName === 'LI'){ 
-        moves++;
-        setScore();
-        if(openList.length < 2){                // 0,1
-            console.log(target);
-            if(openList.length>0 && target.firstElementChild.className === openList[0].firstElementChild.className){
-                    target.classList.add('show','open','match');
-                    var item = openList.pop();
-                    item.classList.add('match');
-                    matchedList.push(item, target);
-            }else{                              // when 0 and not same
+    if(!(target.classList.contains('open','show'))){
+       if(target.nodeName === 'LI'){
+            moves++;
+            setScore();
+            if(openList.length < 2){                // 0,1
+                console.log(target);
+                if(openList.length>0 && target.firstElementChild.className === openList[0].firstElementChild.className){
+                        target.classList.add('show','open','match');
+                        var item = openList.pop();
+                        item.classList.add('match');
+                        matchedList.push(item, target);
+                }else{                              // when 0 and not same
+                    openList.push(target);
+                    target.classList.add('open','show');
+                }
+            }else{                                  // 2
+                let item = openList.pop();
+                item.classList.remove('open','show');
+                item = openList.pop();
+                item.classList.remove('open','show');
                 openList.push(target);
                 target.classList.add('open','show');
             }
-        }else{                                  // 2
-            var item = openList.pop();
-            item.classList.remove('open','show');
-            var item = openList.pop();
-            item.classList.remove('open','show');
-            openList.push(target);
-            target.classList.add('open','show');
+            
         }
+        if(matchedList.length === 16){
+            showDialog();
+        } 
     }
-    if(matchedList.length === 16){
-        showDialog();
-    }
-}
+    
+};
 
 deck.addEventListener('click',openCard);
