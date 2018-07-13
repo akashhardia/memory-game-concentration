@@ -33,6 +33,7 @@ function showDialog(){
                             <button  class='play-again' onclick=closeDialog()>Play Again</button>`
     dialog.innerHTML = str;
     dialog.show();
+    myAnimation(dialog,'zoomIn');
 }
 
 function closeDialog(){
@@ -101,6 +102,12 @@ function setStars(){
         document.querySelector('.stars').firstElementChild.remove();
 }
 
+function myAnimation(item, animation){
+    item.classList.toggle(animation);
+    setTimeout(function(){ 
+        item.classList.toggle(animation);
+    }, 1000);
+}
 
 let openCard = function(event){
     const target = event.target;
@@ -111,13 +118,18 @@ let openCard = function(event){
             if(openList.length < 2){                // 0,1
                 console.log(target);
                 if(openList.length>0 && target.firstElementChild.className === openList[0].firstElementChild.className){
-                        target.classList.add('show','open','match');
+                        target.classList.add('show','open','match','animated');
+                        myAnimation(target,'rubberBand');
                         var item = openList.pop();
                         item.classList.add('match');
+                        myAnimation(item,'rubberBand');
+                        // item.classList.toggle('match');
                         matchedList.push(item, target);
                 }else{                              // when 0 and not same
+                    
                     openList.push(target);
-                    target.classList.add('open','show');
+                    target.classList.add('open','show','animated');
+                    myAnimation(target,'flipInY');
                 }
             }else{                                  // 2
                 let item = openList.pop();
@@ -125,7 +137,8 @@ let openCard = function(event){
                 item = openList.pop();
                 item.classList.remove('open','show');
                 openList.push(target);
-                target.classList.add('open','show');
+                target.classList.add('open','show','animated');
+                myAnimation(target,'flipInY');
             }
             
         }
@@ -133,7 +146,6 @@ let openCard = function(event){
             showDialog();
         } 
     }
-    
 };
 
 deck.addEventListener('click',openCard);
