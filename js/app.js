@@ -12,10 +12,10 @@ let moves           = 0,
 const cardList      = ['fa fa-diamond','fa fa-paper-plane-o','fa fa-anchor','fa fa-bolt','fa fa-cube','fa fa-leaf','fa fa-bicycle','fa fa-bomb',
                        'fa fa-diamond','fa fa-paper-plane-o','fa fa-anchor','fa fa-bolt','fa fa-cube','fa fa-leaf','fa fa-bicycle','fa fa-bomb'],
       openList      = [];
-      
+
 
 //========================================================================================
-// Restart 
+// Restart
 
 document.querySelector('.restart').addEventListener('click',restart);
 function restart(){
@@ -38,11 +38,11 @@ function restart(){
 // Timer
 
 let myWatch;
-function startWatch() { 
+function startWatch() {
     myWatch = setInterval( function(){          // starts timer
         timer++;
         document.querySelector('.timer').textContent = timer;
-    }, 1000); 
+    }, 1000);
 }
 function stopWatch(){
     clearInterval(myWatch);                     //stops the timer
@@ -60,7 +60,7 @@ function showDialog(){                                                          
     myAnimation(dialog,'zoomIn');
 }
 
-function closeDialog(){                                                                 // hides modal 
+function closeDialog(){                                                                 // hides modal
     dialog.close();
     restart();
 }
@@ -73,7 +73,7 @@ let display = function(){
     console.log(shuffledList);
     const deck          = document.querySelector('.deck');
     shuffledList.forEach(function(item){
-        let newElement    = document.createElement('li'); 
+        let newElement    = document.createElement('li');
         newElement.innerHTML = '<i class="'+item+'"></i>';
         newElement.classList.add('card');
         deck.appendChild(newElement);
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded',display);
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
-    
+
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -126,7 +126,7 @@ function setStars(){
 
 function myAnimation(item, animation){
     item.classList.toggle(animation);
-    setTimeout(function(){ 
+    setTimeout(function(){
         item.classList.toggle(animation);
     }, 1000);
 }
@@ -136,7 +136,7 @@ function myAnimation(item, animation){
 
 let openCard = function(event){
     const target = event.target;
-    if(!(target.classList.contains('open','show'))){        // if it doesn't contain open, show 
+    if(!(target.classList.contains('open','show'))){        // if it doesn't contain open, show
        if(target.nodeName === 'LI'){                        // if li is clicked
            if (clickedOnce === false){
                clickedOnce = true;
@@ -146,7 +146,7 @@ let openCard = function(event){
             setScore();
             if(openList.length < 2){                // when open list has 0 or 1 items
                 console.log(target);
-                
+
                 // when 1 item in openlist and it is same as target
                 if(openList.length>0 && target.firstElementChild.className === openList[0].firstElementChild.className){
                         target.classList.add('show','open','match','animated');
@@ -156,7 +156,7 @@ let openCard = function(event){
                         myAnimation(item,'rubberBand');
                         matchedList.push(item, target);             // add items into matched list
                 }else{                              // when 0 item
-                    
+
                     openList.push(target);
                     target.classList.add('open','show','animated');
                     myAnimation(target,'flipInY');
@@ -167,18 +167,18 @@ let openCard = function(event){
                 item.classList.remove('open','show');
                 item = openList.pop();
                 item.classList.remove('open','show');
-                
-                // add the target 
+
+                // add the target
                 openList.push(target);
                 target.classList.add('open','show','animated');
                 myAnimation(target,'flipInY');
             }
-            
+
         }
         if(matchedList.length === 16){
             stopWatch();
             showDialog();
-        } 
+        }
     }
 };
 
