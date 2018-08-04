@@ -27,6 +27,7 @@ function restart(){
     stars = 3;
     stopWatch();
     timer = 0;
+    document.querySelector('.timer').textContent = timer;
     clickedOnce = false;
     document.querySelector('.stars').innerHTML =  `<li><i class="fa fa-star"></i></li>
             		                                <li><i class="fa fa-star"></i></li>
