@@ -41,7 +41,7 @@ let myWatch;
 function startWatch() { 
     myWatch = setInterval( function(){          // starts timer
         timer++;
-        setScore();
+        document.querySelector('.timer').textContent = timer;
     }, 1000); 
 }
 function stopWatch(){
@@ -105,11 +105,10 @@ function shuffle(array) {
 
 let setScore = function(){
     document.querySelector('.moves').textContent = moves;
-    document.querySelector('.timer').textContent = timer;
-    if(moves === 21){
+    if(moves === 25){
         setStars();
         --stars;
-    }else if(moves === 35){
+    }else if(moves === 45){
         setStars();
         --stars;
     }
@@ -119,7 +118,7 @@ let setScore = function(){
 // Set Stars
 
 function setStars(){
-        document.querySelector('.stars').firstElementChild.remove();
+        document.querySelector('.stars').firstElementChild.remove();        // remove one star
 }
 
 //==================================================================================
