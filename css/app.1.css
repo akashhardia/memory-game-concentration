@@ -32,7 +32,6 @@ body {
 h1 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
-    font-size: 200%;
 }
 
 /*
@@ -40,10 +39,10 @@ h1 {
  */
 
 .deck {
-    width: 343px;
-    min-height: 353px;
+    width: 660px;
+    min-height: 680px;
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
-    padding: 16px;
+    padding: 32px;
     border-radius: 10px;
     box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
     display: flex;
@@ -54,8 +53,8 @@ h1 {
 }
 
 .deck .card {
-    height: 65px;
-    width: 65px;
+    height: 125px;
+    width: 125px;
     background: #2e3d49;
     font-size: 0;
     color: #ffffff;
@@ -68,6 +67,7 @@ h1 {
 }
 
 .deck .card.open {
+    transform: rotateY(0);
     background: #02b3e4;
     cursor: default;
 }
@@ -90,9 +90,6 @@ h1 {
     text-align: left;
     width: 345px;
     margin-bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    line-height: 48px;
 }
 
 .score-panel .stars {
@@ -108,12 +105,8 @@ h1 {
 }
 
 .score-panel .restart {
-    height: 100%;
-    width: 48px;
     float: right;
     cursor: pointer;
-    font-size: 200%;
-    text-align: center;
 }
 #myDialog {
     border: none;
@@ -132,23 +125,4 @@ h1 {
     color: white;
     height: 30px;
     border-radius: 5px;
-}
-
-@media screen and (min-width: 700px){
-    .deck{
-        width: 660px;
-        min-height: 680px;
-        padding: 32px;
-    }
-    .deck .card {
-        height: 125px;
-        width: 125px;
-    }
-    h1{
-        font-size: 200%;
-    }
-    .score-panel{
-        padding-left: 0px;
-        padding-right: 0px;
-    }
 }
