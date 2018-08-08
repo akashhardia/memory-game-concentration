@@ -17,7 +17,8 @@ body {
 }
 
 body {
-    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    background: #ffffff url('../img/geometry2.png');
+    /* Background pattern from Subtle Patterns */
     font-family: 'Coda', cursive;
     background-attachment: fixed;
 }
@@ -115,7 +116,9 @@ h1 {
     font-size: 200%;
     text-align: center;
 }
-#myDialog {
+
+#modal {
+    display: none;
     border: none;
     width: 100vw;
     height: 100vh;
@@ -123,9 +126,14 @@ h1 {
     letter-spacing: 1.5px;
     word-spacing: 1.5px;
     line-height: 2;
-    padding-top: 200px;
+    padding-top: 20rem;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-image: url(../img/geometry2.png);
 }
-.play-again{
+
+.play-again {
     background-color: #00b9aa;
     border-color: #a6f6f1;
     width: 100px;
@@ -134,8 +142,8 @@ h1 {
     border-radius: 5px;
 }
 
-@media screen and (min-width: 700px){
-    .deck{
+@media screen and (min-width: 700px) {
+    .deck {
         width: 660px;
         min-height: 680px;
         padding: 32px;
@@ -144,10 +152,10 @@ h1 {
         height: 125px;
         width: 125px;
     }
-    h1{
+    h1 {
         font-size: 200%;
     }
-    .score-panel{
+    .score-panel {
         padding-left: 0px;
         padding-right: 0px;
     }

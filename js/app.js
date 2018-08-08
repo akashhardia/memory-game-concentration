@@ -4,7 +4,7 @@
 let moves = 0,
     stars = 3,
     deck = document.querySelector('.deck'),
-    dialog = document.getElementById("myDialog"),
+    dialog = document.getElementById("modal"),
     timer = 0,
     matchedList = [],
     clickedOnce = false;
@@ -61,12 +61,12 @@ function showDialog() { // shows modal
                             with   ${moves} moves and ${stars} stars in ${timer} seconds<br>
                             <button  class='play-again' onclick="closeDialog()">Play Again</button>`
     dialog.innerHTML = str;
-    dialog.show();
+    dialog.style.display = 'block';
     myAnimation(dialog, 'zoomIn');
 }
 
 function closeDialog() { // hides modal
-    dialog.close();
+    dialog.style.display = "none";
     restart();
 }
 
