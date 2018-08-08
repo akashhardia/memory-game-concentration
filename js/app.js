@@ -24,6 +24,7 @@ function restart() {
     // window.location.reload();
     deck.innerHTML = '';
     matchedList.length = 0;
+    openList.length = 0;
     display(); // render new cards
     moves = 0;
     stars = 3;
