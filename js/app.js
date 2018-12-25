@@ -1,22 +1,22 @@
 /*
  * Create a list that holds all of your cards
  */
-let moves = 0,
-    stars = 3,
-    deck = document.querySelector('.deck'),
-    dialog = document.getElementById("modal"),
-    timer = 0,
+let moves       = 0,
+    stars       = 3,
+    deck        = document.querySelector('.deck'),
+    dialog      = document.getElementById("modal"),
+    timer       = 0,
     matchedList = [],
     clickedOnce = false;
 
-const cardList = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb',
-        'fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb'
-    ],
-    openList = [];
+const cardList  =   ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb',
+                     'fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb'],
+    openList    =   [];
 
 
 //========================================================================================
-// Restart
+//                              Restart
+//========================================================================================
 
 document.querySelector('.restart').addEventListener('click', restart);
 
@@ -72,6 +72,14 @@ function closeDialog() { // hides modal
 }
 
 //==================================================================================
+// Remove loader
+
+function removeLoader(){
+    document.getElementById("loader-container").style.display="none";
+    document.getElementById("container").removeAttribute('class');
+}
+
+//==================================================================================
 // Render shuffled cards
 
 let display = function() {
@@ -87,6 +95,7 @@ let display = function() {
 };
 
 document.addEventListener('DOMContentLoaded', display);
+window.onload = removeLoader;
 
 //==================================================================================
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -152,7 +161,7 @@ let openCard = function(event) {
             }
             moves++;
             setScore();
-            if (openList.length < 2) { // when open list has 0 or 1 items
+            if (openList.length < 2) { // when open list '1' or 'no' items
                 console.log(target);
 
                 // when 1 item in openlist and it is same as target
@@ -164,7 +173,7 @@ let openCard = function(event) {
                     myAnimation(item, 'rubberBand');
                     matchedList.push(item, target); // add items into matched list
                 }
-                else { // when 0 item
+                else { // when item 'unmatched'   or '0' item in openlist
 
                     openList.push(target);
                     target.classList.add('open', 'show', 'animated');

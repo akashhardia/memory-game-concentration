@@ -8,6 +8,10 @@ html {
     box-sizing: inherit;
 }
 
+.avoid-clicks{
+    pointer-events: none;
+}
+
 html,
 body {
     width: 100%;
@@ -23,7 +27,7 @@ body {
     background-attachment: fixed;
 }
 
-.container {
+#container {
     display: flex;
     justify-content: center;
     align-items: center;
