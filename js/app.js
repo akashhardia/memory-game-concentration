@@ -1,90 +1,20 @@
 /*
  * Create a list that holds all of your cards
  */
-let moves       = 0,
-    stars       = 3,
-    deck        = document.querySelector('.deck'),
+let deck        = document.querySelector('.deck'),
     dialog      = document.getElementById("modal"),
     timer       = 0,
-    matchedList = [],
-    clickedOnce = false;
+    stars       = document.querySelector('.stars');
 
 const cardList  =   ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb',
-                     'fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb'],
-    openList    =   [];
+                     'fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb'];
 
-
-//========================================================================================
-//                              Restart
-//========================================================================================
-
-document.querySelector('.restart').addEventListener('click', restart);
-
-function restart() {
-    // window.location.reload();
-    deck.innerHTML = '';
-    matchedList.length = 0;
-    openList.length = 0;
-    display(); // render new cards
-    moves = 0;
-    stars = 3;
-    stopWatch();
-    timer = 0;
-    document.querySelector('.timer').textContent = timer;
-    clickedOnce = false;
-    document.querySelector('.stars').innerHTML = `<li><i class="fa fa-star"></i></li>
-            		                                <li><i class="fa fa-star"></i></li>
-            	                                	<li><i class="fa fa-star"></i></li>`;
-    setScore();
-}
-
-//========================================================================================
-// Timer
-
-let myWatch;
-
-function startWatch() {
-    myWatch = setInterval(function() { // starts timer
-        timer++;
-        document.querySelector('.timer').textContent = timer;
-    }, 1000);
-}
-
-function stopWatch() {
-    clearInterval(myWatch); //stops the timer
-}
-
-//==================================================================================
-// Modal
-
-function showDialog() { // shows modal
-    const str = `<h1>Congratulations! You Won</h1>
-                            with   ${moves} moves and ${stars} stars in ${timer} seconds<br>
-                            <button  class='play-again' onclick="closeDialog()">Play Again</button>`
-    dialog.innerHTML = str;
-    dialog.style.display = 'block';
-    myAnimation(dialog, 'zoomIn');
-}
-
-function closeDialog() { // hides modal
-    dialog.style.display = "none";
-    restart();
-}
-
-//==================================================================================
-// Remove loader
-
-function removeLoader(){
-    document.getElementById("loader-container").style.display="none";
-    document.getElementById("container").removeAttribute('class');
-}
 
 //==================================================================================
 // Render shuffled cards
 
 let display = function() {
     const shuffledList = shuffle(cardList); // get shuffled cards
-    console.log(shuffledList);
     const deck = document.querySelector('.deck');
     shuffledList.forEach(function(item) {
         let newElement = document.createElement('li');
@@ -114,20 +44,80 @@ function shuffle(array) {
     return array;
 }
 
+//========================================================================================
+//                              Restart
+//========================================================================================
 
+
+
+function restart(openList,matchedList, obj) {
+    // window.location.reload();
+    deck.innerHTML = '';
+    matchedList.length = 0;
+    openList.length = 0;
+    display(); // render new cards
+    obj.moves = 0;
+    stopWatch();
+    timer = 0;
+    document.querySelector('.timer').textContent = timer;
+    obj.clickedOnce = false;
+    stars.innerHTML = `<li><i class="fa fa-star"></i></li>
+            		                                <li><i class="fa fa-star"></i></li>
+            	                                	<li><i class="fa fa-star"></i></li>`;
+    setScore(obj.moves);
+}
+
+//========================================================================================
+// Timer
+
+let myWatch;
+
+function startWatch() {
+    myWatch = setInterval(function() { // starts timer
+        timer++;
+        document.querySelector('.timer').textContent = timer;
+    }, 1000);
+}
+
+function stopWatch() {
+    clearInterval(myWatch); //stops the timer
+}
+
+//==================================================================================
+// Modal
+
+function showDialog(moves) { // shows modal
+    const str = `<h1>Congratulations! You Won</h1>
+                            with   ${moves} moves and ${stars.childElementCount} stars in ${timer} seconds<br>
+                            <button  class='play-again' onclick="closeDialog()">Play Again</button>`
+    dialog.innerHTML = str;
+    dialog.style.display = 'block';
+    myAnimation(dialog, 'zoomIn');
+}
+
+function closeDialog() { // hides modal
+    dialog.style.display = "none";
+    document.querySelector('.restart').click();
+}
+
+//==================================================================================
+// Remove loader
+
+function removeLoader(){
+    document.getElementById("loader-container").style.display="none";
+    document.getElementById("container").removeAttribute('class');
+}
 
 //==================================================================================
 // Set Score
 
-let setScore = function() {
+let setScore = function(moves) {
     document.querySelector('.moves').textContent = moves;
     if (moves === 25) {
         setStars();
-        --stars;
     }
     else if (moves === 45) {
         setStars();
-        --stars;
     }
 };
 
@@ -151,18 +141,17 @@ function myAnimation(item, animation) {
 //==================================================================================
 // Open Card
 
-let openCard = function(event) {
+function openCard(event,openList, matchedList, obj) {
     const target = event.target;
     if (!(target.classList.contains('open', 'show'))) { // if it doesn't contain open, show
-        if (target.nodeName === 'LI') { // if li is clicked
-            if (clickedOnce === false) {
-                clickedOnce = true;
+        if (target.nodeName === 'LI') { // only if 'li' is clicked
+            if (obj.clickedOnce === false) {
+                obj.clickedOnce = true;
                 startWatch();
             }
-            moves++;
-            setScore();
+            obj.moves++;
+            setScore(obj.moves);
             if (openList.length < 2) { // when open list '1' or 'no' items
-                console.log(target);
 
                 // when 1 item in openlist and it is same as target
                 if (openList.length > 0 && target.firstElementChild.className === openList[0].firstElementChild.className) {
@@ -196,9 +185,26 @@ let openCard = function(event) {
         }
         if (matchedList.length === 16) {
             stopWatch();
-            showDialog();
+            showDialog(obj.moves);
         }
     }
 };
 
-deck.addEventListener('click', openCard); // on clicking card
+
+(function (){
+    let openList    =   [],
+    matchedList = [],
+    obj = {clickedOnce: false, moves: 0};
+    deck.onclick = function(e){
+        openCard(e,openList, matchedList, obj);
+    }; // on clicking card
+    document.querySelector('.restart').onclick = function(e){
+        restart(openList, matchedList, obj);
+    }
+})();
+
+
+
+// arrays are passed by ref by default
+// objects are passed by ref
+// primitives are always passed by value
