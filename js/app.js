@@ -161,12 +161,14 @@ function openCard(event,openList, matchedList, obj) {
                     item.classList.add('match');
                     myAnimation(item, 'rubberBand');
                     matchedList.push(item, target); // add items into matched list
+                    matchedSound.play();
                 }
                 else { // when item 'unmatched'   or '0' item in openlist
 
                     openList.push(target);
                     target.classList.add('open', 'show', 'animated');
                     myAnimation(target, 'flipInY');
+                    clickSound.play();
                 }
             }
             else { // when openlist has 2 items
@@ -180,6 +182,8 @@ function openCard(event,openList, matchedList, obj) {
                 openList.push(target);
                 target.classList.add('open', 'show', 'animated');
                 myAnimation(target, 'flipInY');
+
+                clickSound.play();
             }
 
         }
@@ -203,8 +207,10 @@ function openCard(event,openList, matchedList, obj) {
     }
 })();
 
-
-
 // arrays are passed by ref by default
 // objects are passed by ref
 // primitives are always passed by value
+
+// document.onkeydown = function onKeyDown(evt){
+
+//         }
