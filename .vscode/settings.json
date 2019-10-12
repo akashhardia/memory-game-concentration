@@ -1,9 +1,12 @@
 {
-    "files.trimFinalNewlines": true,
-    "files.insertFinalNewline": true,
-    "editor.tabSize": 2,
-    "editor.autoIndent": true,
-    "editor.formatOnSave": true,
-    "files.autoSave": "onFocusChange",
-    "files.trimTrailingWhitespace": true
+  "workbench.iconTheme": "material-icon-theme",
+  "files.trimFinalNewlines": true,
+  "files.insertFinalNewline": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.autoIndent": true,
+  "editor.formatOnSave": true,
+  "files.autoSave": "onFocusChange",
+  "files.trimTrailingWhitespace": true
 }
