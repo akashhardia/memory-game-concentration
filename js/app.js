@@ -1,22 +1,22 @@
 /*
  * Create a list that holds all of your cards
  */
-let deck        = document.querySelector('.deck'),
-    dialog      = document.getElementById("modal"),
-    timer       = 0,
-    stars       = document.querySelector('.stars');
+let deck = document.querySelector('.deck'),
+    dialog = document.getElementById("modal"),
+    timer = 0,
+    stars = document.querySelector('.stars');
 
-const cardList  =   ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb',
-                     'fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb'];
+const cardList = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb',
+    'fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 'fa fa-cube', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-bomb'];
 
 
 //==================================================================================
 // Render shuffled cards
 
-let display = function() {
+let display = function () {
     const shuffledList = shuffle(cardList); // get shuffled cards
     const deck = document.querySelector('.deck');
-    shuffledList.forEach(function(item) {
+    shuffledList.forEach(function (item) {
         let newElement = document.createElement('li');
         newElement.innerHTML = '<i class="' + item + '"></i>';
         newElement.classList.add('card');
@@ -50,7 +50,7 @@ function shuffle(array) {
 
 
 
-function restart(openList,matchedList, obj) {
+function restart(openList, matchedList, obj) {
     // window.location.reload();
     deck.innerHTML = '';
     matchedList.length = 0;
@@ -73,7 +73,7 @@ function restart(openList,matchedList, obj) {
 let myWatch;
 
 function startWatch() {
-    myWatch = setInterval(function() { // starts timer
+    myWatch = setInterval(function () { // starts timer
         timer++;
         document.querySelector('.timer').textContent = timer;
     }, 1000);
@@ -103,15 +103,15 @@ function closeDialog() { // hides modal
 //==================================================================================
 // Remove loader
 
-function removeLoader(){
-    document.getElementById("loader-container").style.display="none";
+function removeLoader() {
+    document.getElementById("loader-container").style.display = "none";
     document.getElementById("container").removeAttribute('class');
 }
 
 //==================================================================================
 // Set Score
 
-let setScore = function(moves) {
+let setScore = function (moves) {
     document.querySelector('.moves').textContent = moves;
     if (moves === 25) {
         setStars();
@@ -133,7 +133,7 @@ function setStars() {
 
 function myAnimation(item, animation) {
     item.classList.toggle(animation);
-    setTimeout(function() {
+    setTimeout(function () {
         item.classList.toggle(animation);
     }, 1000);
 }
@@ -141,7 +141,7 @@ function myAnimation(item, animation) {
 //==================================================================================
 // Open Card
 
-function openCard(event,openList, matchedList, obj) {
+function openCard(event, openList, matchedList, obj) {
     const target = event.target;
     if (!(target.classList.contains('open', 'show'))) { // if it doesn't contain open, show
         if (target.nodeName === 'LI') { // only if 'li' is clicked
@@ -195,14 +195,14 @@ function openCard(event,openList, matchedList, obj) {
 };
 
 
-(function (){
-    let openList    =   [],
-    matchedList = [],
-    obj = {clickedOnce: false, moves: 0};
-    deck.onclick = function(e){
-        openCard(e,openList, matchedList, obj);
+(function () {
+    let openList = [],
+        matchedList = [],
+        obj = { clickedOnce: false, moves: 0 };
+    deck.onclick = function (e) {
+        openCard(e, openList, matchedList, obj);
     }; // on clicking card
-    document.querySelector('.restart').onclick = function(e){
+    document.querySelector('.restart').onclick = function (e) {
         restart(openList, matchedList, obj);
     }
 })();

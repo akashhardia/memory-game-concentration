@@ -1,0 +1,9 @@
+{
+    "files.trimFinalNewlines": true,
+    "files.insertFinalNewline": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": true,
+    "editor.formatOnSave": true,
+    "files.autoSave": "onFocusChange",
+    "files.trimTrailingWhitespace": true
+}
